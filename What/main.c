@@ -1,45 +1,46 @@
 #include "handler.h"
 
-HINSTANCE ghInstance = NULL;
-PWSTR     gpCmdLine  = NULL;
-int       gnCmdShow  = 0;
+HINSTANCE g_instance_ = NULL;
+PWSTR     g_cmd_line_ = NULL;
+int       g_cmd_show_ = 0;
+int       g_screen_w_ = 0;
+int       g_screen_h_ = 0;
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow)
-{
-	LPCWSTR kWndClz = TEXT("What");
-	HWND hwnd;
-	WNDCLASS wc;
-	MSG msg;
-	
-	ghInstance = hInstance;
-	gpCmdLine  = pCmdLine;
-	gnCmdShow  = nCmdShow;
+int WINAPI WinMain(HINSTANCE instance, HINSTANCE _, PWSTR cmd_line, int cmd_show) {
+  LPCWSTR kWndClz = TEXT("Warcraft III Helper");
+  const int kWndW = 480;
+  const int kWndH = 320;
+  HWND hwnd;
+  WNDCLASS wc;
+  MSG msg;
 
-	MEMZERO(wc);
-	MEMZERO(msg);
-	wc.lpfnWndProc = WindowProc;
-	wc.hInstance = hInstance;
-	wc.lpszClassName = kWndClz;
+  g_instance_ = instance;
+  g_cmd_line_ = cmd_line;
+  g_cmd_show_ = cmd_show;
+  g_screen_w_ = GetSystemMetrics(SM_CXSCREEN);
+  g_screen_h_ = GetSystemMetrics(SM_CYSCREEN);
 
-	if (!RegisterClass(&wc))
-		return 1;
-
-	hwnd = CreateWindowEx(
-		0, kWndClz, L"What", WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 280, 200,
-		NULL, NULL, hInstance, NULL
-	);
-
-	if (NULL == hwnd)
-		return 2;
-
-	ShowWindow(hwnd, nCmdShow);
-
-	while (GetMessage(&msg, NULL, 0, 0) > 0)
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-
-	return 0;
+  MEMZERO(wc);
+  MEMZERO(msg);
+  wc.lpfnWndProc = WindowProc;
+  wc.hInstance = instance;
+  wc.lpszClassName = kWndClz;
+  if (!RegisterClass(&wc)) {
+    return 1;
+  }
+  hwnd = CreateWindowEx(WS_EX_DLGMODALFRAME,
+    kWndClz, L"×ÖÌåÖØµşĞŞ¸´",
+    WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+    (g_screen_w_ - kWndW) >> 1, (g_screen_h_ - kWndH) >> 1, kWndW, kWndH,
+    NULL, NULL, instance, NULL
+  );
+  if (NULL == hwnd) {
+    return 2;
+  }
+  ShowWindow(hwnd, cmd_show);
+  while (GetMessage(&msg, NULL, 0, 0) > 0) {
+    TranslateMessage(&msg);
+    DispatchMessage(&msg);
+  }
+  return 0;
 }
