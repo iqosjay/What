@@ -7,6 +7,7 @@ void Helper_OpenFullscreen();
 void Helper_UpdateCursorLockState(BOOL lock);
 void Helper_UpdateBorderVisibility(BOOL visible);
 void Helper_InvalidateWnd();
+void Helper_UpdateTaskbarState(BOOL visible);
 
 #endif // !WHAT_HELPER_H_
 

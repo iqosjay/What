@@ -14,6 +14,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
       break;
     case WM_DESTROY:
       UnregisterHotkeys(hwnd);
+      Helper_UpdateTaskbarState(TRUE);
       PostQuitMessage(0);
       return 0;
     case WM_HOTKEY:
