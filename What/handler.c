@@ -79,9 +79,9 @@ static void OnPaint(HWND hwnd) {
   SetBkMode(hdc, TRANSPARENT);
   LPCWSTR kUsage = L"以窗口模式运行 War3\n"
     L"CTRL + SHIFT + O 去除 War3 边框\n"
-    L"CTRL + O         恢复 War3 边框\n"
-    L"CTRL + SHIFT + L 窗口模式锁定鼠标\n"
-    L"CTRL + L         解除窗口模式鼠标锁定\n"
+    L"CTRL + SHIFT + L 窗口模式鼠标锁定\n"
+    L"CTRL + O 恢复 War3 边框\n"
+    L"CTRL + L 解除窗口鼠标锁定\n"
     L"CTRL + SHIFT + Z 会刷新 War 窗口\n"
     L"只要出现字体重叠就 CTRL + SHIFT + Z";
                   

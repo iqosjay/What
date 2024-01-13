@@ -29,8 +29,7 @@ int WINAPI WinMain(HINSTANCE instance, HINSTANCE _, PWSTR cmd_line, int cmd_show
     return 1;
   }
   hwnd = CreateWindowEx(WS_EX_DLGMODALFRAME,
-    kWndClz, L"×ÖÌåÖØµþÐÞ¸´",
-    WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
+    kWndClz, TEXT("×ÖÌåÖØµþÐÞ¸´"), WS_OVERLAPPEDWINDOW,
     (g_screen_w_ - kWndW) >> 1, (g_screen_h_ - kWndH) >> 1, kWndW, kWndH,
     NULL, NULL, instance, NULL
   );

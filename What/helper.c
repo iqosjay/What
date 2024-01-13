@@ -1,5 +1,7 @@
 #include "helper.h"
 
+static void Helper_UpdateTaskbarState(BOOL visible);
+
 static inline HWND find_warcraft_hwnd() {
   LPCWSTR kWndClz = TEXT("Warcraft III");
   return FindWindow(kWndClz, NULL);
@@ -25,10 +27,10 @@ void Helper_UpdateCursorLockState(BOOL lock) {
   }
   style = GetWindowLong(hwnd, GWL_STYLE);
   fullscreen = 0 == (style & WS_OVERLAPPEDWINDOW);
-  rect.top += fullscreen ? 0 : 32;
-  rect.left += 8;
-  rect.right -= 8;
-  rect.bottom -= 8;
+  rect.left   += 8;
+  rect.right  -= 8;
+  rect.top    += fullscreen ? 0 : 32;
+  rect.bottom -= fullscreen ? 0 : 8;
   ClipCursor(&rect);
 }
 
@@ -60,6 +62,15 @@ void Helper_InvalidateWnd() {
   y = rect.top;
   w = rect.right - x;
   h = rect.bottom - y;
+  Helper_UpdateTaskbarState(FALSE);
   MoveWindow(hwnd, x + 1, y + 1, w - 2, h - 2, FALSE);
-  MoveWindow(hwnd, x, y, w, h, TRUE);
+  MoveWindow(hwnd, x,     y,     w,     h,     TRUE);
+  Helper_UpdateTaskbarState(TRUE);
+}
+
+static void Helper_UpdateTaskbarState(BOOL visible) {
+  HWND hwnd = FindWindow(TEXT("Shell_TrayWnd"), NULL);
+  if (NULL != hwnd) { 
+    ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
+  }
 }
