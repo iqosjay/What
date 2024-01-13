@@ -19,10 +19,7 @@ void Helper_UpdateCursorLockState(BOOL lock) {
   LONG style;
   BOOL fullscreen;
   hwnd = find_warcraft_hwnd();
-  if (NULL == hwnd) {
-    return;
-  }
-  if (!lock || !GetWindowRect(hwnd, &rect)) {
+  if (NULL == hwnd || !lock || !GetWindowRect(hwnd, &rect)) {
     ClipCursor(NULL);
     return;
   }
