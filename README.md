@@ -2,9 +2,9 @@
 
 # 工具下载
 
-[Windows32 位](https://github.com/iqosjay/What/blob/main/Builds/What32.exe)
+[Windows32 位](https://github.com/iqosjay/What/releases/download/v1.0.0/What32.exe)
 
-[Windows64 位](https://github.com/iqosjay/What/blob/main/Builds/What64.exe)
+[Windows64 位](https://github.com/iqosjay/What/releases/download/v1.0.0/What64.exe)
 
 # 使用方法
 ## 1、打开此工具
