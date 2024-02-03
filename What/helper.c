@@ -9,7 +9,7 @@ void Helper_OpenFullscreen() {
     HWND hWnd;
     hWnd = find_war3_hwnd();
     if (NULL != hWnd) {
-        MoveWindow(hWnd, 0, 0, g_ScreenWidth, g_ScreenHeight, TRUE);
+        MoveWindow(hWnd, 0, 0, g_screenWidth, g_screenHeight, TRUE);
     }
 }
 
@@ -24,13 +24,13 @@ void Helper_UpdateCursorLockState(BOOL lock) {
         return;
     }
     style = GetWindowLong(hWnd, GWL_STYLE);
-    hasBorder = 0 != (style & WS_OVERLAPPEDWINDOW);
+    hasBorder = 0 != (WS_OVERLAPPEDWINDOW & style);
     if (hasBorder) {
-        rect.top += 32;
+        rect.top    += 32;
+        rect.left   += 8;
+        rect.right  -= 8;
+        rect.bottom -= 8;
     }
-    rect.left    += 8;
-    rect.right   -= 8;
-    rect.bottom  -= 8;
     ClipCursor(&rect);
 }
 
@@ -42,7 +42,7 @@ void Helper_UpdateBorderVisibility(BOOL visible) {
         return;
     }
     style1 = GetWindowLong(hWnd, GWL_STYLE);
-    style2 = visible ? (style1 | WS_OVERLAPPEDWINDOW) : (style1 & ~WS_OVERLAPPEDWINDOW);
+    style2 = visible ? (WS_OVERLAPPEDWINDOW | style1) : (~WS_OVERLAPPEDWINDOW & style1);
     if (style1 == style2) {
         return;
     }
@@ -64,7 +64,7 @@ void Helper_InvalidateWnd() {
     h = rect.bottom - y;
     Helper_UpdateTaskbarState(FALSE);
     MoveWindow(hWnd, x + 1, y + 1, w - 2, h - 2, FALSE);
-    MoveWindow(hWnd, x, y, w, h, TRUE);
+    MoveWindow(hWnd, x,     y,     w,     h, TRUE);
     Helper_UpdateTaskbarState(TRUE);
 }
 

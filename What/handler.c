@@ -1,13 +1,12 @@
 #include "handler.h"
 
-#include "helper.h"
+static void  RegisterHotkeys(HWND hWnd);
+static void  OnHotkey(HWND hWnd, WPARAM wParam);
+static void  UnregisterHotkeys(HWND hWnd);
+static void  OnPaint(HWND hWnd);
+static HFONT Font();
 
-static void RegisterHotkeys(HWND hWnd);
-static void OnHotkey(HWND hWnd, WPARAM wParam);
-static void UnregisterHotkeys(HWND hWnd);
-static void OnPaint(HWND hWnd);
-
-LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT CALLBACK OnWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
     switch (uMsg) {
         case WM_CREATE:
             RegisterHotkeys(hWnd);
@@ -68,10 +67,19 @@ static void UnregisterHotkeys(HWND hWnd) {
     UnregisterHotKey(hWnd, HOTKEY_ID_INVALIDATE_WND);
 }
 
+static HFONT Font() {
+    static HFONT hFont = NULL;
+    if (NULL == hFont) {
+        hFont = CreateFont(0, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
+            OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,
+            VARIABLE_PITCH, TEXT("微软雅黑"));
+    }
+    return hFont;
+}
+
 
 static void OnPaint(HWND hWnd) {
     PAINTSTRUCT ps;
-    HFONT hFont;
     RECT textArea;
     HDC hdc;
     MEMZERO(textArea);
@@ -87,14 +95,10 @@ static void OnPaint(HWND hWnd) {
         TEXT("解除鼠标锁定：CTRL + ALT + L\n")
         TEXT("强制刷新窗口：CTRL + SHIFT + Z\n")
         TEXT("只要字体重叠就按 CTRL + SHIFT + Z";)
-
-        hFont = CreateFont(0, 0, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET,
-            OUT_OUTLINE_PRECIS, CLIP_DEFAULT_PRECIS, CLEARTYPE_QUALITY,
-            VARIABLE_PITCH, TEXT("微软雅黑"));
-    SelectObject(hdc, hFont);
-    textArea.left = 64;
-    textArea.top = 48;
-    textArea.right = 480;
+    SelectObject(hdc, Font());
+    textArea.left   = 64;
+    textArea.top    = 48;
+    textArea.right  = 480;
     textArea.bottom = 320;
     DrawText(hdc, kUsage, -1, &textArea, DT_LEFT | DT_WORDBREAK);
     EndPaint(hWnd, &ps);
