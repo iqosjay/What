@@ -18,15 +18,16 @@
 如果哪天我知道了这个方法，再来更新吧~~~
 
 ## 3、使用快捷键
-***CTRL + SHIFT + F*** 会将 War3 全屏
 
 ***CTRL + SHIFT + O*** 会去除 War3 的窗体边框
 
-***CTRL + O*** 则会恢复 War3 的窗体边框
+***CTRL + SHIFT + F*** 会将 War3 全屏
 
 ***CTRL + SHIFT + L*** 会启用窗口模式锁定鼠标
 
-***CTRL + L*** 会解除窗口模式鼠标锁定
+***CTRL + ALT + O*** 则会恢复 War3 的窗体边框
+
+***CTRL + ALT + L*** 会解除窗口模式鼠标锁定
 
 ***CTRL + SHIFT + Z*** 会强制刷新 War3 的窗口从而解决字体重叠问题
 
