@@ -64,7 +64,7 @@ void Helper_InvalidateWnd() {
     h = rect.bottom - y;
     Helper_UpdateTaskbarState(FALSE);
     MoveWindow(hWnd, x + 1, y + 1, w - 2, h - 2, FALSE);
-    MoveWindow(hWnd, x,     y,     w,     h, TRUE);
+    MoveWindow(hWnd, x,     y,     w,     h,     TRUE);
     Helper_UpdateTaskbarState(TRUE);
 }
 
