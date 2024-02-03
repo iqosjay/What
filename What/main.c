@@ -1,9 +1,9 @@
 #include "handler.h"
 
-HINSTANCE g_hInstance = NULL;
-PWSTR     g_lpCmdLine = NULL;
-int       g_nCmdShow = 0;
-int       g_screenWidth = 0;
+HINSTANCE g_hInstance    = NULL;
+PWSTR     g_lpCmdLine    = NULL;
+int       g_nCmdShow     = 0;
+int       g_screenWidth  = 0;
 int       g_screenHeight = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine, int nCmdShow) {
@@ -22,9 +22,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR lpCmdLine
 
     MEMZERO(wc);
     MEMZERO(msg);
-    wc.lpfnWndProc = OnWndProc;
-    wc.hInstance = hInstance;
+
+    wc.lpfnWndProc   = OnWndProc;
+    wc.hInstance     = hInstance;
     wc.lpszClassName = kWndClz;
+
     if (!RegisterClass(&wc)) {
         MessageBox(NULL, TEXT("无法注册窗口类"), TEXT("错误"), MB_OK);
         return 1;

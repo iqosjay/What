@@ -53,18 +53,23 @@ void Helper_UpdateBorderVisibility(BOOL visible) {
 void Helper_InvalidateWnd() {
     HWND hWnd;
     RECT rect;
-    LONG x, y, w, h;
+    LONG ox, oy, ow, oh;
+    LONG nx, ny, nw, nh;
     hWnd = find_war3_hwnd();
     if (NULL == hWnd || !GetWindowRect(hWnd, &rect)) {
         return;
     }
-    x = rect.left;
-    y = rect.top;
-    w = rect.right - x;
-    h = rect.bottom - y;
+    ox = rect.left;
+    oy = rect.top;
+    ow = rect.right  - ox;
+    oh = rect.bottom - oy;
+    nx = ox + 1;
+    ny = oy + 1;
+    nw = ow - 2;
+    nh = oh - 2;
     Helper_UpdateTaskbarState(FALSE);
-    MoveWindow(hWnd, x + 1, y + 1, w - 2, h - 2, FALSE);
-    MoveWindow(hWnd, x,     y,     w,     h,     TRUE);
+    MoveWindow(hWnd, ox, oy, ow, oh, FALSE);
+    MoveWindow(hWnd, nx, ny, nw, nh, TRUE);
     Helper_UpdateTaskbarState(TRUE);
 }
 
