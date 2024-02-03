@@ -12,11 +12,11 @@
 #define HOTKEY_ID_RELEASE_CURSOR 0x2004
 #define HOTKEY_ID_INVALIDATE_WND 0x2005
 
-extern HINSTANCE g_instance_;
-extern PWSTR     g_cmd_line_;
-extern int       g_cmd_show_;
-extern int       g_screen_w_;
-extern int       g_screen_h_;
+extern HINSTANCE g_hInstance;
+extern PWSTR     g_CmdLine;
+extern int       g_CmdShow;
+extern int       g_ScreenWidth;
+extern int       g_ScreenHeight;
 
 #endif // !WHAT_DEFINITIONS_H_
 

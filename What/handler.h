@@ -3,6 +3,6 @@
 
 #include "definitions.h"
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp);
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 #endif // !WHAT_CONTROLLER_H_

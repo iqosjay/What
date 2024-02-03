@@ -1,76 +1,76 @@
 #include "helper.h"
 
-static inline HWND find_warcraft_hwnd() {
-  LPCWSTR kWndClz = TEXT("Warcraft III");
-  return FindWindow(kWndClz, NULL);
+static inline HWND find_war3_hwnd() {
+    LPCWSTR kWndClz = TEXT("Warcraft III");
+    return FindWindow(kWndClz, NULL);
 }
 
 void Helper_OpenFullscreen() {
-  HWND hwnd;
-  hwnd = find_warcraft_hwnd();
-  if (NULL != hwnd) {
-    MoveWindow(hwnd, 0, 0, g_screen_w_, g_screen_h_, TRUE);
-  }
+    HWND hWnd;
+    hWnd = find_war3_hwnd();
+    if (NULL != hWnd) {
+        MoveWindow(hWnd, 0, 0, g_ScreenWidth, g_ScreenHeight, TRUE);
+    }
 }
 
 void Helper_UpdateCursorLockState(BOOL lock) {
-  HWND hwnd;
-  RECT rect;
-  LONG style;
-  BOOL fullscreen;
-  hwnd = find_warcraft_hwnd();
-  if (NULL == hwnd || !lock || !GetWindowRect(hwnd, &rect)) {
-    ClipCursor(NULL);
-    return;
-  }
-  style = GetWindowLong(hwnd, GWL_STYLE);
-  fullscreen = 0 == (style & WS_OVERLAPPEDWINDOW);
-  if (!fullscreen) {
-    rect.left   += 8;
-    rect.right  -= 8;
-    rect.top    += 32;
-    rect.bottom -= 8;
-  }
-  ClipCursor(&rect);
+    HWND hWnd;
+    RECT rect;
+    LONG style;
+    BOOL hasBorder;
+    hWnd = find_war3_hwnd();
+    if (NULL == hWnd || !lock || !GetWindowRect(hWnd, &rect)) {
+        ClipCursor(NULL);
+        return;
+    }
+    style = GetWindowLong(hWnd, GWL_STYLE);
+    hasBorder = 0 != (style & WS_OVERLAPPEDWINDOW);
+    if (hasBorder) {
+        rect.top += 32;
+    }
+    rect.left    += 8;
+    rect.right   -= 8;
+    rect.bottom  -= 8;
+    ClipCursor(&rect);
 }
 
 void Helper_UpdateBorderVisibility(BOOL visible) {
-  HWND hwnd;
-  LONG style1, style2;
-  hwnd = find_warcraft_hwnd();
-  if (NULL == hwnd) {
-    return;
-  }
-  style1 = GetWindowLong(hwnd, GWL_STYLE);
-  style2 = visible ? (style1 | WS_OVERLAPPEDWINDOW) : (style1 & ~WS_OVERLAPPEDWINDOW);
-  if (style1 == style2) {
-    return;
-  }
-  SetWindowLong(hwnd, GWL_STYLE, style2);
-  SetWindowPos(hwnd, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
+    HWND hWnd;
+    LONG style1, style2;
+    hWnd = find_war3_hwnd();
+    if (NULL == hWnd) {
+        return;
+    }
+    style1 = GetWindowLong(hWnd, GWL_STYLE);
+    style2 = visible ? (style1 | WS_OVERLAPPEDWINDOW) : (style1 & ~WS_OVERLAPPEDWINDOW);
+    if (style1 == style2) {
+        return;
+    }
+    SetWindowLong(hWnd, GWL_STYLE, style2);
+    SetWindowPos(hWnd, NULL, 0, 0, 0, 0, SWP_FRAMECHANGED | SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER);
 }
 
 void Helper_InvalidateWnd() {
-  HWND hwnd;
-  RECT rect;
-  LONG x, y, w, h;
-  hwnd = find_warcraft_hwnd();
-  if (NULL == hwnd || !GetWindowRect(hwnd, &rect)) {
-    return;
-  }
-  x = rect.left;
-  y = rect.top;
-  w = rect.right - x;
-  h = rect.bottom - y;
-  Helper_UpdateTaskbarState(FALSE);
-  MoveWindow(hwnd, x + 1, y + 1, w - 2, h - 2, FALSE);
-  MoveWindow(hwnd, x,     y,     w,     h,     TRUE);
-  Helper_UpdateTaskbarState(TRUE);
+    HWND hWnd;
+    RECT rect;
+    LONG x, y, w, h;
+    hWnd = find_war3_hwnd();
+    if (NULL == hWnd || !GetWindowRect(hWnd, &rect)) {
+        return;
+    }
+    x = rect.left;
+    y = rect.top;
+    w = rect.right - x;
+    h = rect.bottom - y;
+    Helper_UpdateTaskbarState(FALSE);
+    MoveWindow(hWnd, x + 1, y + 1, w - 2, h - 2, FALSE);
+    MoveWindow(hWnd, x, y, w, h, TRUE);
+    Helper_UpdateTaskbarState(TRUE);
 }
 
 void Helper_UpdateTaskbarState(BOOL visible) {
-  HWND hwnd = FindWindow(TEXT("Shell_TrayWnd"), NULL);
-  if (NULL != hwnd) { 
-    ShowWindow(hwnd, visible ? SW_SHOW : SW_HIDE);
-  }
+    HWND hWnd = FindWindow(TEXT("Shell_TrayWnd"), NULL);
+    if (NULL != hWnd) {
+        ShowWindow(hWnd, visible ? SW_SHOW : SW_HIDE);
+    }
 }
